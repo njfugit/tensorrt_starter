@@ -37,7 +37,7 @@
     "clangd.serverCompletionRanking": true, // 借助网上的信息排序建议
     "clangd.detectExtensionConflicts": false, // 当其它拓展与 clangd 冲突时警告并建议禁用
     "editor.suggest.snippetsPreventQuickSuggestions": true,
-    "clangd.path": "/home/vr134096/.config/Code/User/globalStorage/llvm-vs-code-extensions.vscode-clangd/install/19.1.2/clangd_19.1.2/bin/clangd",
+    "clangd.path": "/usr/bin/clangd",
     "editor.inlayHints.enabled": "off", // clangd的snippets有很多的跳转点，不用这个就必须手动触发Intellisense了
     // [[LLDB]]
     "lldb.commandCompletions": true, // LLDB 指令自动补全
