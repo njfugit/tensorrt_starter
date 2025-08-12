@@ -14,6 +14,7 @@ __global__ void print_dim_kernel(){
          blockDim.z, blockDim.y, blockDim.x);
 }
 
+//索引顺序从z->y->x
 __global__ void print_thread_idx_per_block_kernel(){
     int index = threadIdx.z * blockDim.x * blockDim.y + \
               threadIdx.y * blockDim.x + \
@@ -45,7 +46,7 @@ __global__ void print_cord_kernel(){
     int index = threadIdx.z * blockDim.x * blockDim.y + \
               threadIdx.y * blockDim.x + \
               threadIdx.x;
-
+    // x,y表示在global grid中的thread坐标
     int x  = blockIdx.x * blockDim.x + threadIdx.x;
     int y  = blockIdx.y * blockDim.y + threadIdx.y;
 
@@ -63,10 +64,10 @@ void print_one_dim(){
     dim3 grid(gridDim);
 
     /* 这里建议大家吧每一函数都试一遍*/
-    // print_idx_kernel<<<grid, block>>>();
+    print_idx_kernel<<<grid, block>>>();
     // print_dim_kernel<<<grid, block>>>();
     // print_thread_idx_per_block_kernel<<<grid, block>>>();
-    print_thread_idx_per_grid_kernel<<<grid, block>>>();
+    // print_thread_idx_per_grid_kernel<<<grid, block>>>();
 
     cudaDeviceSynchronize();
 }
@@ -112,8 +113,8 @@ int main() {
     cudaThreadSynchronize: 现在已经不被推荐使用的方法
     __syncthreads:         线程块内同步
     */
-    // print_one_dim();
+    print_one_dim();
     // print_two_dim();
-    print_cord();
+    // print_cord();
     return 0;
 }
