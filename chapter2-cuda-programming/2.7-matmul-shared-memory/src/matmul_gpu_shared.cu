@@ -20,15 +20,17 @@ __global__ void MatmulSharedStaticKernel(float *M_device, float *N_device, float
     int ty = threadIdx.y;
     int tx = threadIdx.x;
     /* 对于每一个P的元素，我们只需要循环遍历width / tile_width 次就okay了，这里有点绕，画图理解一下*/
-    for (int m = 0; m < width / BLOCKSIZE; m ++) {
+    for (int m = 0; m < width / BLOCKSIZE; m++) {
+        // 1. 加载数据到共享内存
         M_deviceShared[ty][tx] = M_device[y * width + (m * BLOCKSIZE + tx)];
-        N_deviceShared[ty][tx] = N_device[(m * BLOCKSIZE + ty)* width + x];
-        __syncthreads();
-
-        for (int k = 0; k < BLOCKSIZE; k ++) {
+        N_deviceShared[ty][tx] = N_device[(m * BLOCKSIZE + ty) * width + x];
+        __syncthreads();  // 确保所有线程都完成加载
+        
+        // 2. 计算部分乘积
+        for (int k = 0; k < BLOCKSIZE; k++) {
             P_element += M_deviceShared[ty][k] * N_deviceShared[k][tx];
         }
-        __syncthreads();
+        __syncthreads();  // 确保计算完成后再进入下一轮
     }
 
     P_device[y * width + x] = P_element;
@@ -67,7 +69,7 @@ __global__ void MatmulSharedDynamicKernel(float *M_device, float *N_device, floa
         }
         __syncthreads();
     }
-
+    //防止越界  矩阵大小不能被块大小整除的问题
     if (y < width && x < width) {
         P_device[y * width + x] = P_element;
     }

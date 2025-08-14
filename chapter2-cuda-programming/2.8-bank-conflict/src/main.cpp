@@ -41,7 +41,7 @@ int main(){
     timer.start_gpu();
     MatmulOnDevice(h_matM, h_matN, d_matP, width, blockSize);
     timer.stop_gpu();
-    std::sprintf(str, "matmul in gpu(general)");
+    sprintf(str, "matmul in gpu(general)");
     timer.duration_gpu(str);
     compareMat(h_matP, d_matP, size);
 
@@ -49,7 +49,7 @@ int main(){
     timer.start_gpu();
     MatmulSharedOnDevice(h_matM, h_matN, h_matP, width, blockSize, statMem);
     timer.stop_gpu();
-    std::sprintf(str, "matmul in gpu(shared memory(static))");
+    sprintf(str, "matmul in gpu(shared memory(static))");
     timer.duration_gpu(str);
     compareMat(h_matP, d_matP, size);
 
@@ -57,7 +57,7 @@ int main(){
     timer.start_gpu();
     MatmulSharedConflictOnDevice(h_matM, h_matN, d_matP, width, blockSize, statMem);
     timer.stop_gpu();
-    std::sprintf(str, "matmul in gpu(shared memory(static, bank conf))");
+    sprintf(str, "matmul in gpu(shared memory(static, bank conf))");
     timer.duration_gpu(str);
     compareMat(h_matP, d_matP, size);
 
@@ -65,7 +65,7 @@ int main(){
     timer.start_gpu();
     MatmulSharedConflictPadOnDevice(h_matM, h_matN, d_matP, width, blockSize, statMem);
     timer.stop_gpu();
-    std::sprintf(str, "matmul in gpu(shared memory(static, pad resolve bank conf))");
+    sprintf(str, "matmul in gpu(shared memory(static, pad resolve bank conf))");
     timer.duration_gpu(str);
     compareMat(h_matP, d_matP, size);
 
@@ -74,7 +74,7 @@ int main(){
     timer.start_gpu();
     MatmulSharedOnDevice(h_matM, h_matN, d_matP, width, blockSize, statMem);
     timer.stop_gpu();
-    std::sprintf(str, "matmul in gpu(shared memory(dynamic))");
+    sprintf(str, "matmul in gpu(shared memory(dynamic))");
     timer.duration_gpu(str);
     compareMat(h_matP, d_matP, size);
 
@@ -83,7 +83,7 @@ int main(){
     timer.start_gpu();
     MatmulSharedConflictOnDevice(h_matM, h_matN, d_matP, width, blockSize, statMem);
     timer.stop_gpu();
-    std::sprintf(str, "matmul in gpu(shared memory(dynamic, bank conf)");
+    sprintf(str, "matmul in gpu(shared memory(dynamic, bank conf)");
     timer.duration_gpu(str);
     compareMat(h_matP, d_matP, size);
 
@@ -92,7 +92,7 @@ int main(){
     timer.start_gpu();
     MatmulSharedConflictPadOnDevice(h_matM, h_matN, d_matP, width, blockSize, statMem);
     timer.stop_gpu();
-    std::sprintf(str, "matmul in gpu(shared memory(dynamic, pad resolve bank conf))");
+    sprintf(str, "matmul in gpu(shared memory(dynamic, pad resolve bank conf))");
     timer.duration_gpu(str);
     compareMat(h_matP, d_matP, size);
 
